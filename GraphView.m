@@ -18,6 +18,7 @@
 @implementation GraphView
 
 @synthesize rangeX, rangeY, graphs, graphColors;
+@synthesize graph1Visible, graph2Visible, graph3Visible;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -97,6 +98,12 @@
 	keyEnumerator = [graphs keyEnumerator];
 	while (key = [keyEnumerator nextObject])
 	{
+		if ([key isEqualToString:@"y1"]&&!graph1Visible)
+			continue;
+		if ([key isEqualToString:@"y2"]&&!graph2Visible)
+			continue;
+		if ([key isEqualToString:@"y3"]&&!graph3Visible)
+			continue;
 		if ([graphs objectForKey:key] && [[graphs objectForKey:key] length]>0) {
 			[[graphColors objectForKey:key] set];
 //			[[NSColor blueColor] set];

@@ -13,9 +13,31 @@
 @implementation GraphinCalculatorAppDelegate
 
 @synthesize window, graphView, rangeX, rangeY, graph1, graph2, graph3, graphColor1, graphColor2, graphColor3;
+@synthesize graph1Visible,graph2Visible,graph3Visible;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	[self newGraph:nil];
+}
+
+-(void) dealloc {
+	[graphView release];
+	
+	[rangeX release];
+	[rangeY release];
+	
+	[graph1 release];
+	[graph2 release];
+	[graph3 release];
+	
+	[graphColor1 release];
+	[graphColor2 release];
+	[graphColor3 release];
+	
+	[graph1Visible release];
+	[graph2Visible release];
+	[graph3Visible release];
+	
+	[super dealloc];
 }
 
 -(IBAction) newGraph:(id)sender {
@@ -45,6 +67,10 @@
 	[graphView.graphColors setObject:[graphColor1 color] forKey:@"y1"];
 	[graphView.graphColors setObject:[graphColor2 color] forKey:@"y2"];
 	[graphView.graphColors setObject:[graphColor3 color] forKey:@"y3"];
+	
+	graphView.graph1Visible = (graph1Visible.state==NSOnState);
+	graphView.graph2Visible = (graph2Visible.state==NSOnState);
+	graphView.graph3Visible = (graph3Visible.state==NSOnState);
 	
 	[graphView setNeedsDisplay:YES];
 }
@@ -148,6 +174,8 @@
 	[self graph:nil];
 }
 
-
+-(IBAction) closeWindow:(id)sender {
+	// terminate app
+}
 
 @end

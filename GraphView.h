@@ -14,9 +14,12 @@
 	
 	NSMutableDictionary *graphs;
 	NSMutableDictionary *graphColors;
+	
+	BOOL graph1Visible,graph2Visible,graph3Visible;
 }
 
 @property float rangeX, rangeY;
+@property BOOL graph1Visible, graph2Visible, graph3Visible;
 @property (nonatomic, retain) NSMutableDictionary *graphs;
 @property (nonatomic, retain) NSMutableDictionary *graphColors;
 

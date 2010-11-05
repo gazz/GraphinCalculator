@@ -25,6 +25,10 @@
 	IBOutlet NSColorWell *graphColor1;
 	IBOutlet NSColorWell *graphColor2;
 	IBOutlet NSColorWell *graphColor3;
+	
+	IBOutlet NSButton *graph1Visible;
+	IBOutlet NSButton *graph2Visible;
+	IBOutlet NSButton *graph3Visible;
 }
 
 
@@ -43,10 +47,14 @@
 @property (nonatomic, retain) IBOutlet NSColorWell *graphColor2;
 @property (nonatomic, retain) IBOutlet NSColorWell *graphColor3;
 
+@property (nonatomic, retain) IBOutlet NSButton *graph1Visible, *graph2Visible, *graph3Visible;
+
 -(IBAction) graph:(id)sender;
 
 -(IBAction) newGraph:(id)sender;
 -(IBAction) openGraph:(id)sender;
 -(IBAction) saveGraph:(id)sender;
+
+-(IBAction) closeWindow:(id)sender;
 
 @end
