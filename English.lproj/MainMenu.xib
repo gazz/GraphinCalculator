@@ -1617,7 +1617,7 @@
 						</object>
 						<object class="NSButton" id="36604986">
 							<reference key="NSNextResponder" ref="439893737"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{442, 79}, {22, 18}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<bool key="NSEnabled">YES</bool>
@@ -1644,7 +1644,7 @@
 						</object>
 						<object class="NSButton" id="37029171">
 							<reference key="NSNextResponder" ref="439893737"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{442, 51}, {22, 18}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<bool key="NSEnabled">YES</bool>
@@ -1666,7 +1666,7 @@
 						</object>
 						<object class="NSButton" id="709347785">
 							<reference key="NSNextResponder" ref="439893737"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{442, 24}, {22, 18}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<bool key="NSEnabled">YES</bool>
@@ -3076,7 +3076,6 @@
 							<reference ref="664712499"/>
 							<reference ref="295825272"/>
 							<reference ref="333819101"/>
-							<reference ref="958243763"/>
 							<reference ref="648951331"/>
 							<reference ref="529878159"/>
 							<reference ref="620629608"/>
@@ -3084,6 +3083,7 @@
 							<reference ref="37029171"/>
 							<reference ref="709347785"/>
 							<reference ref="36604986"/>
+							<reference ref="958243763"/>
 						</object>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -4211,9 +4211,9 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{591, 662}, {595, 445}}</string>
+					<string>{{340, 527}, {595, 445}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{591, 662}, {595, 445}}</string>
+					<string>{{340, 527}, {595, 445}}</string>
 					<integer value="1"/>
 					<string>{{33, 99}, {480, 360}}</string>
 					<string>{3.40282e+38, 3.40282e+38}</string>

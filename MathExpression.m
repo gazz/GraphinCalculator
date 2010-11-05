@@ -115,7 +115,7 @@
 		}
 	}
 	
-	NSLog(@"Debug info: %@", [self description]);
+//	NSLog(@"Debug info: %@", [self description]);
 	
 	return self;
 }
