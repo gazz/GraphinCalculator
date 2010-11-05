@@ -11,6 +11,8 @@
 
 @implementation MathExpression
 
+@synthesize members, mathFunctions;
+
 +(id) expressionWithFormula:(NSString*)formula {
 	return [[[MathExpression alloc] initWithFormula:formula] autorelease];
 }
@@ -22,6 +24,15 @@
 
 -(id) initWithFormula:(NSString*)formula {
 	if ([super init]) {
+		self.mathFunctions = [NSMutableDictionary dictionary];
+		[mathFunctions setObject:[MathFunction sine] forKey:@"sin"];
+		[mathFunctions setObject:[MathFunction cosine] forKey:@"cos"];
+		[mathFunctions setObject:[MathFunction tangent] forKey:@"tan"];
+		[mathFunctions setObject:[MathFunction cotangent] forKey:@"ctan"];
+		[mathFunctions setObject:[MathFunction abs] forKey:@"abs"];
+		[mathFunctions setObject:[MathFunction min] forKey:@"min"];
+		[mathFunctions setObject:[MathFunction max] forKey:@"max"];
+		
 		NSMutableArray *tokens = [NSMutableArray array];
 		
 		CFRange range = CFRangeMake(0, [formula length]);
@@ -49,7 +60,9 @@
 	if ([super init]) {
 		NSMutableArray *_members = [NSMutableArray array];
 		BOOL isComplex = NO;
+		BOOL isFunction = NO;
 		// parse tokens
+		NSString *lastToken = nil;
 		for (int i=0; i< tokens.count; ++i) {
 			NSString *token = [tokens objectAtIndex:i];
 			UInt32 blockStartIndex = 0;
@@ -68,7 +81,16 @@
 					if (blocksOpen==0) {
 						// remove parenthesis
 						NSArray *subBlockTokens = [tokens subarrayWithRange:NSMakeRange(blockStartIndex+1, j-blockStartIndex-1)];
-						[_members addObject:[MathExpression expressionWithTokens:subBlockTokens]];
+						if (isFunction) {
+							NSMutableArray *mathFunctionTokens = [NSMutableArray arrayWithObject:lastToken];
+							[mathFunctionTokens addObjectsFromArray:subBlockTokens];
+							[_members addObject:[MathExpression expressionWithTokens:mathFunctionTokens]];
+							// add another math expression subcontext
+							[MathExpression expressionWithTokens:mathFunctionTokens];
+							isFunction = NO;
+						} else {
+							[_members addObject:[MathExpression expressionWithTokens:subBlockTokens]];
+						}
 						break;
 					}
 					++i;
@@ -77,30 +99,38 @@
 			else if ([token isEqualToString:@","]) {
 				isComplex = YES;
 			}
+			else if ([mathFunctions objectForKey:token]) {
+				isFunction = YES;
+			}
 			else {
 				[_members addObject:token];
 			}
+			lastToken = token;
 		}
 		// move all items to complex param
 		if (isComplex) {
-			members = [NSArray arrayWithObject:[ComplexParam paramWithItems:_members]];
+			self.members = [NSArray arrayWithObject:[ComplexParam paramWithItems:_members]];
 		} else {
-			members = _members;
+			self.members = _members;
 		}
 	}
+	
+	NSLog(@"Debug info: %@", [self description]);
+	
 	return self;
 }
+
+-(void) dealloc {
+	[members release];
+	[mathFunctions release];
+	[super dealloc];
+}
+
 
 -(NSObject*) evaluate:(NSDictionary*)_parameters {
 	
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:_parameters];
-	[parameters setObject:[MathFunction sine] forKey:@"sin"];
-	[parameters setObject:[MathFunction cosine] forKey:@"cos"];
-	[parameters setObject:[MathFunction tangent] forKey:@"tan"];
-	[parameters setObject:[MathFunction cotangent] forKey:@"ctan"];
-	[parameters setObject:[MathFunction abs] forKey:@"abs"];
-	[parameters setObject:[MathFunction min] forKey:@"min"];
-	[parameters setObject:[MathFunction max] forKey:@"max"];
+	[parameters addEntriesFromDictionary:mathFunctions];
 	
 	if ([members count]==1 && [[members objectAtIndex:0] isKindOfClass:[ComplexParam class]]) {
 		//		NSLog(@"this is complex param");
@@ -109,6 +139,7 @@
 	
 	
 	NSObject *value = nil;
+	float floatValue = 0.0;
 	// turn around expressions
 	NSEnumerator *memberEnum = [members reverseObjectEnumerator];
 	NSObject *member = nil;
@@ -158,6 +189,7 @@
 			value = [self performOperand:operand withA:memberValue andB:value];
 			operand = nil;
 		} else {
+			floatValue = [(NSNumber*)memberValue floatValue];
 			value = memberValue;
 		}
 		

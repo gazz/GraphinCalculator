@@ -23,7 +23,11 @@ enum {
 
 @interface MathExpression : NSObject {
 	NSArray *members;	// can contain variable, value, operand or subexpression
+	NSMutableDictionary *mathFunctions;
 }
+
+@property (retain) NSArray *members;
+@property (retain) NSMutableDictionary *mathFunctions;
 
 +(id) expressionWithFormula:(NSString*)formula;
 +(id) expressionWithTokens:(NSArray*)tokens;
